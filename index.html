@@ -20,10 +20,13 @@
 		
 		<script type = "text/javascript" src = "js/search.js" defer></script>
 		<script type = "text/javascript" src = "js/basic_test.js" defer></script>
+		<script type = "text/javascript" src = "js/data_type.js" defer></script>
+		<script type = "text/javascript" src = "js/pop_up.js" defer></script>
+		<script type = "text/javascript" src = "js/hover.js" defer></script>
 		
 	</head>
 	
-	<body>
+	<body onload = "pop_up();"> 
     	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 
 		<nav class="navbar navbar-expand-lg bg-light">
@@ -80,7 +83,7 @@
 		<!/div>
 		<!p style="text-align:center">
 		<div class= "mx-auto" style="width: 250px;">
-			<a href = "index.html" target = "_blank"> <img src="img/googlelogo_color_272x92dp.png" class = "img-fluid" alt = "구글이미지"></a>
+			<a href = "index.html" target = "_blank"> <img src="img/googlelogo_color_272x92dp.png" class = "img-fluid" alt = "구글이미지" onmouseover="over(this)" onmouseout="out(this)"></a>
 		</div>
 		<!/p>
 		<!img 태그는 이미지를 삽입합니다. scr = 경로, 이미지 깨지면 alt 출력>
@@ -95,7 +98,7 @@
             <! 테이블을 정의합니다.>
 		<br></p> -->
 		
-		<form action ="https://www.google.co.kr/search" method ="GET" target ="_blank">
+		<form id = "form_main" action ="https://www.google.co.kr/search" method ="GET" target ="_blank" onsubmit = "return false">
 			<div class = "d-flex justify-content-center">
 				<mx-auto>
 					<input name="query" type="text" class="form-control-lg" placeholder="검색어 입력" aria-label="search" aria-describedby="search_btn" id="search_txt">
