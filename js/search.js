@@ -1,5 +1,7 @@
 document.getElementById("search_btn").addEventListener('click', search_message);
 
+var search_array = []; //빈 배열 - 전역 변수
+
 function search_message(){
 
 let search_str = document.querySelector("#search_txt");
@@ -8,7 +10,9 @@ let search_str = document.querySelector("#search_txt");
     }
     else{
        alert("검색을 수행합니다!");
-       let text = document.getElementById("search_message").innerHTML = search_str.value;
+		search_array.push(search_str.value);//배열에 검색어 추가
+		let text = document.getElementById("search_message").innerHTML = search_array.toString(); // 값 변환
+       //let text = document.getElementById("search_message").innerHTML = search_;
        document.querySelector("#form_main").submit();
     }
 }
