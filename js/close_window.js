@@ -7,9 +7,18 @@ show_time(); // 실시간 시간 보여주기
 
 function show_time(){
         let divClock = document.getElementById('Time');
-        divClock.innerText = close_time2; // 10초 삽입 시작
+	
+		divClock.innerText = "남은 시간은 " + close_time2 + "초입니다."; //수정, 남은 시간은 8초입니다.
+        /*divClock.innerText = close_time2; // 10초 삽입 시작*/
+	
         close_time2--; // 1초씩 감소
-    setTimeout(show_time, 1000);  //1초마다 갱신
+	
+		if (close_time2 >= 0) {
+		setTimeout(show_time, 1000);
+	  } else {
+		close_window();
+	  }
+    /*setTimeout(show_time, 1000);*/  //1초마다 갱신
 }
 
 function close_window() { // 함수 정의
