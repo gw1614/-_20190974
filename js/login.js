@@ -1,16 +1,54 @@
+function login_check(input, regex, message) 
+{
+    if (!regex.test(input.value))
+	{
+        alert(message);
+        input.focus();
+        return false;
+    }
+    return true;
+}
+
 function login(){
     let form = document.querySelector("#form_main");
     let id = document.querySelector("#floatingInput");
     let password = document.querySelector("#floatingPassword");
+	let check = document.querySelector("#idSaveCheck");
+
     
     form.action = "../index_login.html";
     form.method = "get";
+	
+	if(check.checked == true) 
+	{ // 아이디 체크 o
+            alert("쿠키를 저장합니다.");
+            setCookie("id", id.value, 1); // 1일 저장
+            alert("쿠키 값 :" + id.value);
+    } 
+    else 
+	{ // 아이디 체크 x
+            setCookie("id", id.value, 0); //날짜를 0 - 쿠키 삭제
+    }
+	
+	if (!login_check(id, /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/, "이메일 형식에 맞지 않습니다.")) //이메일 형식으로 작성
+	{
+        return;
+    }
+    if (!login_check(password, /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{10,}$/, "비밀번호 형식에 맞지 않습니다.")) //대소문자,숫자,특수문자, 총 길이 10자 이상 작성
+	{
+        return;
+    }
+    form.submit();
     
+	/*
     if(id.value.length === 0 || password.value.length === 0){
         alert("아이디와 비밀번호를 모두 입력해주세요.");
-    }else{
+    }
+	else
+	{
         form.submit();
     }
+	*/
 }
 
 function logout(){
@@ -33,4 +71,22 @@ function get_id(){  // 메시지 창을 출력하는 함수
 	    } // 2중 for문 끝
 }; // 함수 끝
 alert(getParameters('id') + '님 방갑습니다!'); // 메시지 창 출력
+}
+
+function deleteCookie(cookieName)
+{
+    var expireDate = new Date();
+    expireDate.setDate(expireDate.getDate() - 1);
+    document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString();
+}
+
+function init(){ // 로그인 폼에 쿠키에서 가져온 아이디 입력
+    let id = document.querySelector("#floatingInput");
+    let check = document.querySelector("#idSaveCheck");
+    let get_id = getCookie("id");
+    
+    if(get_id) { 
+    id.value = get_id; 
+    check.checked = true; 
+    }
 }
