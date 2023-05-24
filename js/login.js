@@ -1,3 +1,15 @@
+function addJavascript(jsname) { // 자바스크립트 외부 연동
+	var th = document.getElementsByTagName('head')[0];
+	var s = document.createElement('script');
+	s.setAttribute('type','text/javascript');
+	s.setAttribute('src',jsname);
+	th.appendChild(s);
+}
+addJavascript('/js/security.js'); // 암복호화 함수
+addJavascript('/js/session.js'); // 세션 함수
+addJavascript('/js/cookie.js'); // 쿠키 함수
+
+
 function login_check(input, regex, message) 
 {
     if (!regex.test(input.value))
@@ -86,6 +98,10 @@ function get_id()
 }
 
 
+
+
+/*
+
 function deleteCookie(cookieName)
 {
     var expireDate = new Date();
@@ -115,7 +131,7 @@ function setCookie(name, value, expiredays)
 {
         var date = new Date();
         date.setDate(date.getDate() + expiredays);
-        /*document.cookie = escape(name) + "=" + escape(value) + "; expires=" + date.toUTCString(); */
+        //ocument.cookie = escape(name) + "=" + escape(value) + "; expires=" + date.toUTCString(); 
 		document.cookie = escape(name) + "=" + escape(value) + "; expires=" + date.toUTCString() + "SameSite=None; Secure";
 	
     }
@@ -211,3 +227,4 @@ function decrypt_text(){
     const b = this.decodeByAES256(rk, eb);
     console.log(b); 
 }
+*/
