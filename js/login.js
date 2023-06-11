@@ -9,6 +9,13 @@ addJavascript('/js/security.js'); // 암복호화 함수
 addJavascript('/js/session.js'); // 세션 함수
 addJavascript('/js/cookie.js'); // 쿠키 함수
 
+// 카운트 값을 증가시키는 함수
+function incrementCount(cookieName) {
+    var count = getCookie(cookieName); // 기존 쿠키 값 얻기
+    count = parseInt(count) || 0; // 정수로 변환, 기존 쿠키 값이 없으면 0으로 초기화
+    count++; // 값 증가
+    setCookie(cookieName, count, 1); // 업데이트된 카운트 값을 1일 동안 쿠키에 저장
+}
 
 function login_check(input, regex, message) 
 {
@@ -41,7 +48,7 @@ function login(){
 	{ // 아이디 체크 x
             setCookie("id", id.value, 0); //날짜를 0 - 쿠키 삭제
     }
-	/*
+	
 	if (!login_check(id, /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/, "이메일 형식에 맞지 않습니다.")) //이메일 형식으로 작성
 	{
         return;
@@ -50,9 +57,11 @@ function login(){
 	{
         return;
     }
+	
+	
 	//session_set(); // 세션 생성
     form.submit();
-    */
+    
 	
     if(id.value.length === 0 || password.value.length === 0){
         alert("아이디와 비밀번호를 모두 입력해주세요.");
@@ -60,15 +69,23 @@ function login(){
 	else
 	{
 		session_set(); // 세션 생성
+		incrementCount('login_cnt'); // 로그인 횟수 증가
         form.submit();
     }
 	
 }
 
-function logout(){
-	session_del(); // 세션 삭제
-    location.href='../index.html';
-}
+	function logout()
+	{
+		session_del(); // 세션 삭제
+		incrementCount('logout_cnt'); // 로그아웃 횟수 증가
+
+		location.href='../index.html';
+	}
+
+
+
+
 
 
 function get_id()
@@ -98,7 +115,86 @@ function get_id()
 }
 
 
+/*
+if (id.value.length === 0 || password.value.length === 0) 
+	{
+        alert("아이디와 비밀번호를 모두 입력해주세요.");
+    } 
+	else 
+	{
+        if (!login_check(id, /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/, "이메일 형식에 맞지 않습니다.")) 
+		{
+            return;
+        }
+        if (!login_check(password, /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{10,}$/, "비밀번호 형식에 맞지 않습니다.")) 
+		{
+            return;
+        }
 
+        // 로그인 가능 횟수 체크
+        var loginCount = getCookie("login_cnt") || 0;
+        if (loginCount >= 3) 
+		{
+            alert("로그인 가능 횟수를 초과했습니다. 1분 동안 로그인 할 수 없습니다.");
+            return;
+        }
+
+        session_set(); // 세션 생성
+        incrementCount('login_cnt'); // 로그인 횟수 증가
+        form.submit();
+    }
+}
+
+function logout() 
+{
+    session_del(); // 세션 삭제
+    incrementCount('logout_cnt'); // 로그아웃 횟수 증가
+    location.href = '../index.html';
+}
+*/
+
+/*
+function get_id()
+{  // 메시지 창을 출력하는 함수
+	if(true)
+	{
+        decrypt_text();
+    }
+	
+	else{
+    var getParameters = function(paramName){ // 변수 = 함수(이름)
+    var returnValue; // 리턴값을 위한 변수 선언
+    var url = location.href; // 현재 접속 중인 주소 정보 저장
+    var parameters = (url.slice(url.indexOf('?') + 1, url.length)).split('&'); // ?기준 slice 한 후 split 으로 나눔
+        for(var i = 0; i < parameters.length; i++) { 
+		    var varName = parameters[i].split('=')[0];
+            
+            if (varName.toUpperCase() == paramName.toUpperCase()) {
+                returnValue = parameters[i].split('=')[1];
+                return decodeURIComponent(returnValue);
+            // 나누어진 값의 비교를 통해 paramName 으로 요청된 데이터의 값만 return
+		    }
+	    } // 2중 for문 끝
+	}; // 함수 끝
+	alert(getParameters('id') + '님 방갑습니다!'); // 메시지 창 출력
+	}
+}
+*/
+	/*
+
+// 로그인 횟수를 증가시키는 함수
+function login_count() {
+    incrementCount('login_cnt');
+    alert("로그인 횟수: " + getCookie('login_cnt'));
+}
+
+// 로그아웃 횟수를 증가시키는 함수
+function logout_count() {
+    incrementCount('logout_cnt');
+    alert("로그아웃 횟수: " + getCookie('logout_cnt'));
+}
+
+*/
 
 /*
 
